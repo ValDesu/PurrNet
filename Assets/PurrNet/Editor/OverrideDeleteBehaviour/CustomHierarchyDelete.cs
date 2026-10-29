@@ -9,10 +9,18 @@ namespace PurrNet.Editor
         static CustomHierarchyDelete()
         {
             // Subscribe to the Hierarchy GUI callback
+#if UNITY_6000_6_OR_NEWER
+            EditorApplication.hierarchyWindowItemByEntityIdOnGUI += OnHierarchyGUI;
+#else
             EditorApplication.hierarchyWindowItemOnGUI += OnHierarchyGUI;
+#endif
         }
 
+#if UNITY_6000_6_OR_NEWER
+        private static void OnHierarchyGUI(EntityId instanceid, Rect selectionrect)
+#else
         private static void OnHierarchyGUI(int instanceid, Rect selectionrect)
+#endif
         {
             bool isPlaying = Application.isPlaying;
 

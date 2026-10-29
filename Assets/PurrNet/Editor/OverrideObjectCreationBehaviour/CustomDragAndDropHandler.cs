@@ -27,10 +27,18 @@ namespace PurrNet.Editor
         static CustomDragAndDropHandler()
         {
             SceneView.duringSceneGui += OnSceneGUI;
+#if UNITY_6000_6_OR_NEWER
+            EditorApplication.hierarchyWindowItemByEntityIdOnGUI += OnHierarchyItemGUI;
+#else
             EditorApplication.hierarchyWindowItemOnGUI += OnHierarchyItemGUI;
+#endif
         }
 
+#if UNITY_6000_6_OR_NEWER
+        private static void OnHierarchyItemGUI(EntityId instanceid, Rect selectionrect)
+#else
         private static void OnHierarchyItemGUI(int instanceid, Rect selectionrect)
+#endif
         {
             bool isPlaying = Application.isPlaying;
 
